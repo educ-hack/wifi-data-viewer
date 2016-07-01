@@ -97,6 +97,7 @@ class Application extends BaseApplication
                 'probe_requests_by_phone_brand' => $this->getBrandSharing(),
                 'connexion_by_domain' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
                 'nb_pr' => $this->nb_pr(),
+                'last_cdn_hits' => $this['orm.em']->getRepository('EducHack:CDNHit')->fetchLast()
             ));
         });
     }
@@ -141,9 +142,9 @@ class Application extends BaseApplication
         $mac = strtoupper(str_replace(':', '-', substr($mac, 0, 8)));
         chdir(__DIR__);
         $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "'.$mac.'"'));
-        if (isset(explode(' ', $line, 3)[2]))
-            return explode(' ', $line, 3)[2];
+        if (empty($line)) return 'Autres';
+        if (strpos($line, $mac) !== false)
+            return $line;
         else return 'Autres';
     }
-
 }

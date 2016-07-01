@@ -1,5 +1,6 @@
 EducHack\Model\CDNHit:
     type: entity
+    repositoryClass: EducHack\Repository\CDNHitRepository
     id:
         id:
             type: integer
