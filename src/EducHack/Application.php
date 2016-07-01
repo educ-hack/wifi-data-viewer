@@ -111,7 +111,7 @@ class Application extends BaseApplication
 
         foreach ($mac_ssid as $value) {
             if (array_key_exists($value['mac'], $macs)) {
-                $macs[$value['mac']] []= $value['ssid'];
+                $macs[$value['mac']] [] = $value['ssid'];
             } else {
                 $macs [$value['mac']] = [$value['ssid']];
             }
@@ -140,8 +140,8 @@ class Application extends BaseApplication
         $mac = strtoupper(str_replace(':', '-', substr($mac, 0, 8)));
         chdir(__DIR__);
         $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "'.$mac.'"'));
-        if (isset(explode(' ', $line, 3)[2]))
-            return explode(' ', $line, 3)[2];
+        if (strpos($line, $mac) !== false)
+            return $line;
         else return 'Autres';
     }
 }
