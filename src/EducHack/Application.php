@@ -96,9 +96,28 @@ class Application extends BaseApplication
                 'probe_requests_since' => ['nb_hour' => 2, 'count' => 56],
                 'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
                 'connexion_by_domain' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
-                'nb_pr' => $this['orm.em']->getRepository('EducHack:DeviceSSID')->findSSIDByMac(),
+                'nb_pr' => $this->nb_pr(),
             ));
         });
+    }
+
+    private function nb_pr()
+    {
+        $mac_ssid = $this['orm.em']->getRepository('EducHack:DeviceSSID')->findSSIDByMac();
+
+        $macs = array();
+
+        foreach ($mac_ssid as $value) {
+            if (array_key_exists($value['mac'], $macs)) {
+                $macs[$value['mac']] []= $value['ssid'];
+            } else {
+                $macs [$value['mac']] = [$value['ssid']];
+            }
+        }
+
+        print_r($macs);
+        
+        return $macs;
     }
 
 }
