@@ -12,6 +12,6 @@ EducHack\Model\Position:
             type: integer
     manyToOne:
         device:
-            targetEntity: Device
+            targetEntity: EducHack\Model\Device
         sniffer:
-            targetEntity: Sniffer
+            targetEntity: EducHack\Model\Sniffer

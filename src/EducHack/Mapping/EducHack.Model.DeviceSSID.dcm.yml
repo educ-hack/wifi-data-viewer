@@ -8,6 +8,6 @@ EducHack\Model\DeviceSSID:
                 strategy: AUTO
     manyToOne:
         device:
-            targetEntity: Device
+            targetEntity: EducHack\Model\Device
         ssid:
-            targetEntity: SSID
+            targetEntity: EducHack\Model\SSID
