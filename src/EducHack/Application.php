@@ -16,6 +16,7 @@ class Application extends BaseApplication
         parent::__construct($values);
 
         $this->registerDoctrine();
+        $this->registerServices();
         $this->registerRoutes();
     }
 
@@ -36,7 +37,7 @@ class Application extends BaseApplication
         $this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
             'db.options' => array(
                 'driver' => 'pdo_sqlite',
-                'path' => 'var/educhack.sqlite',
+                'path' => $this['project.root'].'/var/educhack.sqlite',
             ),
         ));
     }
@@ -54,15 +55,25 @@ class Application extends BaseApplication
                         'type' => 'yml',
                         'namespace' => 'EducHack\Model',
                         'path' => $this['project.root'].'/src/EducHack/Mapping',
+                        'alias' => 'EducHack',
                     ),
                 ),
             ),
         ));
     }
 
+    private function registerServices()
+    {
+        $this['educhack.probe_requests_persister'] = function () {
+            return new Service\ProbeRequestsPersister($this['orm.em']);
+        };
+    }
+
     private function registerRoutes()
     {
         $this->post('api/prob', function (Request $request) {
+            $this['educhack.probe_requests_persister']->persistLogs($request->getContent());
+
             return new Response('');
         });
 

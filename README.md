@@ -17,11 +17,24 @@ php bin\console orm:schema-tool:create
 
 ## Usage
 
-Parse log file and load to database:
+This project provides an Api to post wifi logs:
 
-``` php
-cat examples/probe-requests.log | php educhack.php
 ```
+POST api/prob
+
+[
+    {
+        "mac": "ef:c0:e5:f4:23:69",
+        "sniffer_id": "toto",
+        "time": "12:45:50",
+        "noise": 65,
+        "requested_ssid": "CTP Corporate"
+    }
+]
+```
+
+
+Then go to the user interface.
 
 
 ## License
