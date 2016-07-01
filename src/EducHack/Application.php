@@ -92,10 +92,28 @@ class Application extends BaseApplication
 
         $this->get('/', function () {
             return $this['twig']->render('index.twig', array(
-                'probe_requests_since' => ['nb_hour' => 2, 'count' => 56],
-                'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13]
+                'probe_requests_since' => ['count' => count($this['orm.em']->getRepository('EducHack:Position')->findAll())],
+                'probe_requests_by_phone_brand' => $this->getBrandSharing()
             ));
         });
     }
 
+    private function getBrandSharing()
+    {
+        $brands = [];
+        $devices = $this['orm.em']->getRepository('EducHack:Device')->findAll();
+        foreach ($devices as $device) {
+            $brand = $this->getBrandForMac($device->getMac());
+            $brands[$brand] = isset($brands[$brand]) ? $brands[$brand]++ : 1;
+        }
+
+        return $brands;
+    }
+
+    private function getBrandForMac($mac)
+    {
+        chdir(__DIR__);
+        $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "2C-DD-95"'));
+        return explode(' ', $line, 3)[2];
+    }
 }
