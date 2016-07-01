@@ -36,8 +36,7 @@ class Application extends BaseApplication
     {
         $this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
             'db.options' => array(
-                'driver' => 'pdo_sqlite',
-                'path' => $this['project.root'].'/var/educhack.sqlite',
+                'driver' => 'pdo_pgsql',
             ),
         ));
     }
