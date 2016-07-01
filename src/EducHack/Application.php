@@ -37,7 +37,7 @@ class Application extends BaseApplication
         $this->register(new \Silex\Provider\DoctrineServiceProvider(), array(
             'db.options' => array(
                 'driver' => 'pdo_pgsql',
-                'dbname' => 'educhack',
+                'dbname' => 'localhost',
                 'host' => 'educhack',
                 'user' => 'educhack',
                 'password' => 'educhack'
