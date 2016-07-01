@@ -140,6 +140,7 @@ class Application extends BaseApplication
         $mac = strtoupper(str_replace(':', '-', substr($mac, 0, 8)));
         chdir(__DIR__);
         $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "'.$mac.'"'));
+        if (empty($line)) return 'Autres';
         if (strpos($line, $mac) !== false)
             return $line;
         else return 'Autres';
