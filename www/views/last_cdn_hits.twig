@@ -1,0 +1,8 @@
+<h3>
+    Dernière requête DNS:
+</h3>
+
+{% for dns_request in last_cdn_hits if dns_request.domain is not empty %}
+    {{ dns_request.domain }}<br>
+    {{ dns_request.device.mac }}
+{% endfor %}
