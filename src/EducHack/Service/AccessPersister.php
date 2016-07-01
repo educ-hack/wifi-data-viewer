@@ -28,6 +28,12 @@ class AccessPersister
      */
     public function persistLogs($logs)
     {
+        $jsonDecode = json_decode($logs);
+
+        if (null === $jsonDecode) {
+            return;
+        }
+
         foreach (json_decode($logs) as $log) {
             $device = $this->om->getRepository('EducHack:Device')->findOneByMac($log->mac);
             $ssid = $this->om->getRepository('EducHack:SSID')->findOneByName($log->served_ssid);
@@ -51,6 +57,12 @@ class AccessPersister
                 $this->om->persist($sniffer);
             }
 
+            try {
+                $datetime = new \DateTime($this->sanitizeDateTime($log->time));
+            } catch (\Exception $e) {
+                $datetime = new \DateTime();
+            }
+
             $cdnHit = new CDNHit();
 
             $cdnHit
@@ -58,7 +70,7 @@ class AccessPersister
                     ->setSsid($ssid)
                     ->setSniffer($sniffer)
                     ->setDomain($log->requested_domain)
-                    ->setTime(new \DateTime($this->sanitizeDateTime($log->time)))
+                    ->setTime($datetime)
             ;
 
             $this->om->persist($cdnHit);
