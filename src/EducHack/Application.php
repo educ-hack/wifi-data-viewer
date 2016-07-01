@@ -93,7 +93,7 @@ class Application extends BaseApplication
 
         $this->get('/', function () {
             return $this['twig']->render('index.twig', array(
-                'probe_requests_since' => ['count' => count($this['orm.em']->getRepository('EducHack:Position')->findAll())],
+                'probe_requests_since' => ['count' => $this['orm.em']->getRepository('EducHack:Position')->count()],
                 'probe_requests_by_phone_brand' => $this->getBrandSharing(),
                 'connexion_by_domain' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
                 'nb_pr' => $this['orm.em']->getRepository('EducHack:DeviceSSID')->findSSIDByMac(),

@@ -1,5 +1,6 @@
 EducHack\Model\Position:
     type: entity
+    repositoryClass: EducHack\Repository\PositionRepository
     id:
         id:
             type: integer
