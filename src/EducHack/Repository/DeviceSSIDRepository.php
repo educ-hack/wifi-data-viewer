@@ -31,12 +31,7 @@ class DeviceSSIDRepository extends EntityRepository
 
     public function findSSIDByMac()
     {
-        return $this->createQueryBuilder('device_ssid')
-            ->leftJoin('device_ssid.device', 'device')
-            ->leftJoin('device_ssid.ssid', 'ssid')
-            ->groupBy('device.id')
-            ->getQuery()
-            ->getResult()
-            ;
+        return $this->getEntityManager()->getConnection()
+            ->fetchAll('SELECT device.mac, ssid.name FROM devicessid LEFT JOIN device ON devicessid.device_id = device.id LEFT JOIN ssid ON devicessid.ssid_id=ssid.id GROUP BY device.mac, ssid.name')
     }
 }
