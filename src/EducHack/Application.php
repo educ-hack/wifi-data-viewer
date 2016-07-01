@@ -115,8 +115,9 @@ class Application extends BaseApplication
 
     private function getBrandForMac($mac)
     {
+        $mac = strtoupper(str_replace(':', '-', substr($mac, 0, 8)));
         chdir(__DIR__);
-        $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "2C-DD-95"'));
+        $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "'.$mac.'"'));
         return explode(' ', $line, 3)[2];
     }
 }
