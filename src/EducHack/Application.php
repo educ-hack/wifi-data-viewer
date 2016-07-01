@@ -65,5 +65,10 @@ class Application extends BaseApplication
         $this->post('api/prob', function (Request $request) {
             return new Response('');
         });
+
+        $this->get('/', function () {
+            return $this['twig']->render('index.twig', array(
+            ));
+        });
     }
 }
