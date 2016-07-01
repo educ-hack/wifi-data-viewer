@@ -28,4 +28,15 @@ class DeviceSSIDRepository extends EntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findSSIDByMac()
+    {
+        return $this->createQueryBuilder('device_ssid')
+            ->leftJoin('device_ssid.device', 'device')
+            ->leftJoin('device_ssid.ssid', 'ssid')
+            ->groupBy('device.id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
