@@ -70,6 +70,10 @@ class Application extends BaseApplication
         $this['educhack.probe_requests_persister'] = function () {
             return new Service\ProbeRequestsPersister($this['orm.em']);
         };
+
+        $this['educhack.access_persister'] = function () {
+            return new Service\AccessPersister($this['orm.em']);
+        };
     }
 
     private function registerRoutes()
@@ -80,8 +84,14 @@ class Application extends BaseApplication
             return new Response('');
         });
 
-        $this->get('/', function ()
-        {
+
+        $this->post('api/access', function (Request $request) {
+            $this['educhack.access_persister']->persistLogs($request->getContent());
+
+            return new Response('');
+        });
+
+        $this->get('/', function () {
             return $this['twig']->render('index.twig', array(
                 'probe_requests_since' => ['nb_hour' => 2, 'count' => 56],
                 'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],

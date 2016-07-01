@@ -1,0 +1,19 @@
+EducHack\Model\CDNHit:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        domain:
+            type: string
+        time:
+            type: datetime
+    manyToOne:
+        device:
+            targetEntity: EducHack\Model\Device
+        sniffer:
+            targetEntity: EducHack\Model\Sniffer
+        ssid:
+            targetEntity: EducHack\Model\SSID
