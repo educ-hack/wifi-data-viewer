@@ -2,3 +2,4 @@ composer.lock
 vendor/
 src/EducHack/Model
 var/educhack.sqlite
+var/cache

@@ -71,12 +71,16 @@ class ProbeRequestsPersister
                 ->setDevice($device)
                 ->setSniffer($sniffer)
                 ->setNoise($probe->noise)
-                ->setDatetime(new \DateTime($probe->time))
+                ->setDatetime(new \DateTime($this->sanitizeDateTime($probe->datetime)))
             ;
 
             $this->om->persist($position);
+            $this->om->flush();
         }
+    }
 
-        $this->om->flush();
+    public function sanitizeDateTime($datetime)
+    {
+        return substr($datetime, 0, 15);
     }
 }
