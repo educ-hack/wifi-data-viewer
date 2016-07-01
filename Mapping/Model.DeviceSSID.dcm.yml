@@ -1,0 +1,12 @@
+Model\DeviceSSID:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    manyToOne:
+        device:
+            targetEntity: Device
+        ssid:
+            targetEntity: SSID

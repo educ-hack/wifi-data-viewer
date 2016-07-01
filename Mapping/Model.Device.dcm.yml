@@ -1,0 +1,10 @@
+Model\Device:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        mac:
+            type: string
