@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script>
 </head>
 <body>
-TG
-{% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% include 'probe_requests_since.twig' %}
+<table>
+    <thead></thead>
+    <tbody>
+    <tr>
+        <td></td>
+        <td>{% include 'probe_requests_by_phone_brand.twig' %}</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

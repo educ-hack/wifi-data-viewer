@@ -1,0 +1,18 @@
+<canvas id="probe_requests_by_phone_brand" width="400" height="400"></canvas>
+<script>
+    new Chart(document.getElementById("probe_requests_by_phone_brand"), {
+        type: 'pie',
+        data: {
+            labels: ['{{ probe_requests_by_phone_brand|keys|join("', '")|raw }}'],
+            datasets: [
+                {
+                    data: [{{ probe_requests_by_phone_brand|join(',') }}],
+                    backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }]
+        }
+    });
+</script>

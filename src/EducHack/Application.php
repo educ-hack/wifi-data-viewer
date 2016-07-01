@@ -79,7 +79,10 @@ class Application extends BaseApplication
 
         $this->get('/', function () {
             return $this['twig']->render('index.twig', array(
+                'probe_requests_since' => ['nb_hour' => 2, 'count' => 56],
+                'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13]
             ));
         });
     }
+
 }
