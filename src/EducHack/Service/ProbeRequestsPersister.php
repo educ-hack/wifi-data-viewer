@@ -6,6 +6,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use EducHack\Model\Device;
 use EducHack\Model\SSID;
 use EducHack\Model\DeviceSSID;
+use EducHack\Model\Position;
+use EducHack\Model\Sniffer;
 
 class ProbeRequestsPersister
 {
@@ -34,6 +36,7 @@ class ProbeRequestsPersister
                 $probe->mac,
                 $probe->requested_ssid
             );
+            $sniffer = $this->om->getRepository('EducHack:Sniffer')->findOneByName($probe->sniffer_id);
 
             if (null === $device) {
                 $device = new Device();
@@ -55,6 +58,23 @@ class ProbeRequestsPersister
                 ;
                 $this->om->persist($deviceSSID);
             }
+
+            if (null === $sniffer) {
+                $sniffer = new Sniffer();
+                $sniffer->setName($probe->sniffer_id);
+                $this->om->persist($sniffer);
+            }
+
+            $position = new Position();
+
+            $position
+                ->setDevice($device)
+                ->setSniffer($sniffer)
+                ->setNoise($probe->noise)
+                ->setDatetime(new \DateTime($probe->time))
+            ;
+
+            $this->om->persist($position);
         }
 
         $this->om->flush();
