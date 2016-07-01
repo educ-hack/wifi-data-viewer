@@ -109,15 +109,17 @@ class Application extends BaseApplication
         $macs = array();
 
         foreach ($mac_ssid as $value) {
+            if (empty($value['mac']) || empty($value)) {
+                continue;
+            }
+
             if (array_key_exists($value['mac'], $macs)) {
-                $macs[$value['mac']] []= $value['ssid'];
+                $macs[$value['mac']] []= $value['name'];
             } else {
-                $macs [$value['mac']] = [$value['ssid']];
+                $macs [$value['mac']] = [$value['name']];
             }
         }
 
-        print_r($macs);
-        
         return $macs;
     }
 
