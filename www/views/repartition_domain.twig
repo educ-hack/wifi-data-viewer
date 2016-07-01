@@ -1,0 +1,22 @@
+<h3>
+    Pourcentage de connexion par domaine
+</h3>
+
+<canvas id="connexion_by_domain" width="400" height="400"></canvas>
+<script>
+    new Chart(document.getElementById("connexion_by_domain"), {
+        type: 'pie',
+        data: {
+            labels: ['{{ connexion_by_domain|keys|join("', '")|raw }}'],
+            datasets: [
+                {
+                    data: [{{ connexion_by_domain|join(',') }}],
+                    backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }]
+        }
+    });
+</script>

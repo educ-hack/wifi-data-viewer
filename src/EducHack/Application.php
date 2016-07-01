@@ -80,10 +80,13 @@ class Application extends BaseApplication
             return new Response('');
         });
 
-        $this->get('/', function () {
+        $this->get('/', function ()
+        {
             return $this['twig']->render('index.twig', array(
                 'probe_requests_since' => ['nb_hour' => 2, 'count' => 56],
-                'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13]
+                'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
+                'connexion_by_domain' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
+                'nb_pr' => $this['orm.em']->getRepository('EducHack:DeviceSSID')->findSSIDByMac(),
             ));
         });
     }
