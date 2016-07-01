@@ -70,12 +70,22 @@ class Application extends BaseApplication
         $this['educhack.probe_requests_persister'] = function () {
             return new Service\ProbeRequestsPersister($this['orm.em']);
         };
+
+        $this['educhack.access_persister'] = function () {
+            return new Service\AccessPersister($this['orm.em']);
+        };
     }
 
     private function registerRoutes()
     {
         $this->post('api/prob', function (Request $request) {
             $this['educhack.probe_requests_persister']->persistLogs($request->getContent());
+
+            return new Response('');
+        });
+
+        $this->post('api/access', function (Request $request) {
+            $this['educhack.access_persister']->persistLogs($request->getContent());
 
             return new Response('');
         });
