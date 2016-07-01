@@ -93,13 +93,14 @@ class Application extends BaseApplication
 
         $this->get('/', function () {
             return $this['twig']->render('index.twig', array(
-                'probe_requests_since' => ['nb_hour' => 2, 'count' => 56],
-                'probe_requests_by_phone_brand' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
+                'probe_requests_since' => ['count' => $this['orm.em']->getRepository('EducHack:Position')->count()],
+                'probe_requests_by_phone_brand' => $this->getBrandSharing(),
                 'connexion_by_domain' => ['HTC' => 5, 'iPhone' => 10, 'Autres' => 13],
                 'nb_pr' => $this->nb_pr(),
             ));
         });
     }
+
 
     private function nb_pr()
     {
@@ -118,6 +119,29 @@ class Application extends BaseApplication
         print_r($macs);
         
         return $macs;
+    }
+
+
+    private function getBrandSharing()
+    {
+        $brands = [];
+        $devices = $this['orm.em']->getRepository('EducHack:Device')->findAll();
+        foreach ($devices as $device) {
+            $brand = $this->getBrandForMac($device->getMac());
+            $brands[$brand] = isset($brands[$brand]) ? $brands[$brand]++ : 1;
+        }
+
+        return $brands;
+    }
+
+    private function getBrandForMac($mac)
+    {
+        $mac = strtoupper(str_replace(':', '-', substr($mac, 0, 8)));
+        chdir(__DIR__);
+        $line = preg_replace('/\s+/', ' ', shell_exec('cat oui.txt|grep "'.$mac.'"'));
+        if (isset(explode(' ', $line, 3)[2]))
+            return explode(' ', $line, 3)[2];
+        else return 'Autres';
     }
 
 }
