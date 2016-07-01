@@ -1,4 +1,4 @@
-Model\Device:
+EducHack\Model\Sniffer:
     type: entity
     id:
         id:
@@ -6,5 +6,5 @@ Model\Device:
             generator:
                 strategy: AUTO
     fields:
-        mac:
+        name:
             type: string

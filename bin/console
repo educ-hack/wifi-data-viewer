@@ -1,0 +1,12 @@
+<?php
+
+require_once __DIR__.'/../vendor/autoload.php';
+
+$app = new EducHack\Application(array(
+    'project.root' => dirname(__DIR__),
+    'debug' => true,
+));
+
+$console = new EducHack\Console($app);
+
+$console->run();

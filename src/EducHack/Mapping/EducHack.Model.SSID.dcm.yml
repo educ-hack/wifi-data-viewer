@@ -1,4 +1,4 @@
-Model\SSID:
+EducHack\Model\SSID:
     type: entity
     id:
         id:

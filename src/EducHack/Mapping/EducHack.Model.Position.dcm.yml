@@ -1,12 +1,17 @@
-Model\DeviceSSID:
+EducHack\Model\Position:
     type: entity
     id:
         id:
             type: integer
             generator:
                 strategy: AUTO
+    fields:
+        datetime:
+            type: datetime
+        noise:
+            type: integer
     manyToOne:
         device:
             targetEntity: Device
-        ssid:
-            targetEntity: SSID
+        sniffer:
+            targetEntity: Sniffer

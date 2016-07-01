@@ -10,8 +10,8 @@ git clone git@github.com:educ-hack/wifi-data-viewer.git
 cd wifi-data-viewer
 
 composer update
-vendor\bin\doctrine orm:generate-entities .
-vendor\bin\doctrine orm:schema-tool:create
+php bin\console orm:generate:entities src
+php bin\console orm:schema-tool:create
 ```
 
 
